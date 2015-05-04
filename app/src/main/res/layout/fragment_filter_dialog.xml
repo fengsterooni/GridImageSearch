@@ -1,0 +1,155 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mindoctave.android.gridpackagesearch.fragments.FilterDialog">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/search_options_size"
+            android:id="@+id/tvImageSize"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+        <Spinner
+            android:layout_width="238dp"
+            android:layout_height="48dp"
+            android:id="@+id/spImageSize"
+            android:spinnerMode="dialog"
+            android:gravity="end"
+            android:layout_toEndOf="@+id/tvImageType"
+            android:layout_toRightOf="@+id/tvImageType"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/search_options_color"
+            android:id="@+id/tvImageColor"
+            android:layout_below="@id/tvImageSize"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+        <Spinner
+            android:layout_width="238dp"
+            android:layout_height="48dp"
+            android:id="@+id/spImageColor"
+            android:spinnerMode="dialog"
+            android:gravity="end"
+            android:layout_toEndOf="@+id/tvImageType"
+            android:layout_below="@+id/spImageSize"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/tvImageType"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/search_options_image_types"
+            android:id="@+id/tvImageType"
+            android:layout_below="@id/tvImageColor"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+        <Spinner
+            android:layout_width="238dp"
+            android:layout_height="48dp"
+            android:id="@+id/spImageType"
+            android:spinnerMode="dialog"
+            android:layout_below="@id/spImageColor"
+            android:layout_toEndOf="@id/tvImageType"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/search_options_site_filters"
+            android:id="@+id/tvImageSite"
+            android:layout_below="@id/tvImageType"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:id="@+id/etImageSite"
+            android:layout_below="@id/spImageType"
+            android:layout_toEndOf="@+id/tvImageType"
+            android:layout_alignRight="@+id/spImageType"
+            android:layout_alignEnd="@+id/spImageType"
+            android:layout_toRightOf="@+id/tvImageType"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="sans-serif"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/search_option_save"
+            android:id="@+id/buttonSave"
+            android:onClick="onClickSave"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif"
+            android:layout_below="@+id/tvImageSite"
+            android:layout_toLeftOf="@+id/etImageSite"
+            android:layout_toStartOf="@+id/etImageSite" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/search_option_cancel"
+            android:id="@+id/buttonCancel"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif"
+            android:layout_alignTop="@+id/buttonSave"
+            android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

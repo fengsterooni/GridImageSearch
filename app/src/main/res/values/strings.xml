@@ -1,11 +1,22 @@
 <resources>
     <string name="app_name">GridImageSearch</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
     <string name="search_prompt">Enter search query</string>
     <string name="search_label">Search</string>
     <string name="image_title_label">Image Title</string>
     <string name="image_result">Image Result</string>
-    <string name="title_activity_image_display">ImageDisplayActivity</string>
+    <string name="image_label">Image Title</string>
+    <string name="title_activity_image_display">Full Image</string>
+    <string name="search_options_title">Advanced search options</string>
+    <string name="search_options_size">Image Size</string>
+    <string name="search_options_color">Color Filter</string>
+    <string name="search_options_image_types">Image Type</string>
+    <string name="search_options_site_filters">Site Filter</string>
+    <string name="search_option_save">Save</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="search_option_cancel">Cancel</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_filter_dialog">FilterDialogActivity</string>
+    <string name="action_dialog">Dialog</string>
 </resources>
