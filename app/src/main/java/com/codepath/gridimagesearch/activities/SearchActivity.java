@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.adapters.ImageResultsAdapter;
@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 public class SearchActivity extends ActionBarActivity implements FilterDialog.FilterChangedListener{
     private GridView gvResults;
+    private TextView tvNoNetwork;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     private AsyncHttpClient client;
@@ -51,6 +52,9 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        // getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // getSupportActionBar().setIcon(R.drawable.pictures);
 
         setupViews();
 
@@ -91,6 +95,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
                 startActivity(intent);
             }
         });
+        tvNoNetwork = (TextView) findViewById(R.id.tvNoNetwork);
     }
 
     // Append more data into the adapter
@@ -143,9 +148,11 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
             public boolean onQueryTextSubmit(String string) {
                 // Check Internet Availability
                 if (!isNetworkAvailable()) {
-                    Toast.makeText(SearchActivity.this, "Internet is not available", Toast.LENGTH_LONG).show();
+                    tvNoNetwork.setVisibility(View.VISIBLE);
                     return false;
                 }
+
+                tvNoNetwork.setVisibility(View.GONE);
 
                 aImageResults.clear();
                 imageResults.clear();
