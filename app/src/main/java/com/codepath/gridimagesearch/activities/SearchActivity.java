@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.adapters.ImageResultsAdapter;
@@ -36,12 +38,13 @@ import java.util.ArrayList;
 
 public class SearchActivity extends ActionBarActivity implements FilterDialog.FilterChangedListener{
     private GridView gvResults;
-    private TextView tvNoNetwork;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     private AsyncHttpClient client;
     private String query;
     private final String searchUrlBase = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=";
+
+    private Toolbar toolbar;
 
     private String imageSize = "any";
     private String imageColor = "any";
@@ -53,6 +56,9 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         // getSupportActionBar().setDisplayShowHomeEnabled(true);
         // getSupportActionBar().setIcon(R.drawable.pictures);
 
@@ -95,7 +101,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
                 startActivity(intent);
             }
         });
-        tvNoNetwork = (TextView) findViewById(R.id.tvNoNetwork);
+        // tvNoNetwork = (TextView) findViewById(R.id.tvNoNetwork);
     }
 
     // Append more data into the adapter
@@ -148,11 +154,10 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
             public boolean onQueryTextSubmit(String string) {
                 // Check Internet Availability
                 if (!isNetworkAvailable()) {
-                    tvNoNetwork.setVisibility(View.VISIBLE);
+                    // tvNoNetwork.setVisibility(View.VISIBLE);
+                    Toast.makeText(SearchActivity.this, "Internet is not available", Toast.LENGTH_LONG).show();
                     return false;
                 }
-
-                tvNoNetwork.setVisibility(View.GONE);
 
                 aImageResults.clear();
                 imageResults.clear();
@@ -198,7 +203,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
 
         if (!imageType.equals("any")) imageString.append("&imgtype=" + imageType);
 
-        if (imageSite != null) imageString.append("&as_sitesearch=" + imageSite);
+        if (!TextUtils.isEmpty(imageSite)) imageString.append("&as_sitesearch=" + imageSite);
 
         Log.i("INFO", "IMAGE_STRING   ------>>>>   " + imageString);
 

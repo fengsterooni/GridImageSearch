@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -25,12 +26,18 @@ import java.io.IOException;
 
 public class ImageDisplayActivity extends ActionBarActivity {
     private ShareActionProvider sharedAction;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
-        // Remove the actionbar
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         ImageResult result = (ImageResult) getIntent().getSerializableExtra("result");
         // Find the imageView
         ImageView ivImageResult = (ImageView) findViewById(R.id.ivImageResult);
