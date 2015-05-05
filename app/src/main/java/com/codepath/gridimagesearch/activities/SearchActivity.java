@@ -17,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.codepath.gridimagesearch.R;
@@ -25,6 +24,7 @@ import com.codepath.gridimagesearch.adapters.ImageResultsAdapter;
 import com.codepath.gridimagesearch.fragments.FilterDialog;
 import com.codepath.gridimagesearch.listeners.EndlessScrollListener;
 import com.codepath.gridimagesearch.models.ImageResult;
+import com.etsy.android.grid.StaggeredGridView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 
 public class SearchActivity extends ActionBarActivity implements FilterDialog.FilterChangedListener{
-    private GridView gvResults;
+    private StaggeredGridView gvResults;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     private AsyncHttpClient client;
@@ -84,7 +84,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
     }
 
     private void setupViews() {
-        gvResults = (GridView) findViewById(R.id.gvResults);
+        gvResults = (StaggeredGridView) findViewById(R.id.gvResults);
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
