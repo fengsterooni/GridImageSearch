@@ -59,8 +59,6 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        // getSupportActionBar().setDisplayShowHomeEnabled(true);
-        // getSupportActionBar().setIcon(R.drawable.pictures);
 
         setupViews();
 
@@ -110,18 +108,18 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         // Use the offset value and add it as a parameter to your API request to retrieve paginated data.
         // Deserialize API response and then construct new objects to append to the adapter
 
-        // Since Google Image Search API only allow 64 images, we shall stop requesting new
-        // pages after the offset greater than 7
-        if (offset > 7)
-            return;
-
-        performSearch(query, offset);
+        // Search for new items, i.e., next page
+        performSearch(offset);
     }
 
-    public void performSearch(String query, final int offset) {
-        String imageString = buildFilterString().toString();
-        Log.i("INFO", "Image String: " + imageString);
-        String searchUrl = searchUrlBase + query + imageString + "&rsz=8" + "&start=" + offset * 8;
+    private void performSearch() {
+        // Initial search, clear the adapter
+        aImageResults.clear();
+        performSearch(0);
+    }
+
+    private void performSearch(final int offset) {
+        String searchUrl = searchUrlBase + query + buildFilterString().toString() + "&rsz=8" + "&start=" + offset * 8;
         Log.i("INFO", "Search URL: " + searchUrl);
 
         client.get(searchUrl, new JsonHttpResponseHandler() {
@@ -132,6 +130,12 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
 
                 try {
                     imageResultJson = response.getJSONObject("responseData").getJSONArray("results");
+
+                    // First "page", clear the image list
+                    if (offset == 0) {
+                        imageResults.clear();
+                    }
+                    // Add new images to the adapter
                     aImageResults.addAll(ImageResult.fromJSONArray(imageResultJson));
 
                 } catch (JSONException e) {
@@ -151,7 +155,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String string) {
+            public boolean onQueryTextSubmit(String queryString) {
                 // Check Internet Availability
                 if (!isNetworkAvailable()) {
                     // tvNoNetwork.setVisibility(View.VISIBLE);
@@ -159,11 +163,10 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
                     return false;
                 }
 
-                aImageResults.clear();
-                imageResults.clear();
-                query = string;
+                // Get the query string from searchView
+                query = queryString;
                 // perform query here
-                performSearch(string, 0);
+                performSearch();
                 return true;
             }
 
@@ -208,10 +211,9 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         Log.i("INFO", "IMAGE_STRING   ------>>>>   " + imageString);
 
         return imageString;
-
     }
 
-    private Boolean isNetworkAvailable() {
+    public Boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
