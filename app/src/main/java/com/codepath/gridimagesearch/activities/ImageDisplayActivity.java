@@ -32,8 +32,6 @@ public class ImageDisplayActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -64,8 +62,11 @@ public class ImageDisplayActivity extends ActionBarActivity {
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
         shareIntent.setType("image/*");
+
         // Attach share event to the menu item provider
-        sharedAction.setShareIntent(shareIntent);
+        if (sharedAction != null) {
+            sharedAction.setShareIntent(shareIntent);
+        }
     }
 
     // Returns the URI path to the Bitmap displayed in specified ImageView

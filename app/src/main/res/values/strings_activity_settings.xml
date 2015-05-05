@@ -1,7 +1,5 @@
 <resources>
-        <string name="title_activity_settings">Advanced search options</string>
-
-
+    <string name="title_activity_settings">Advanced search options</string>
     <string-array name="imageSize">
         <item>Any</item>
         <item>Small</item>

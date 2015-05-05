@@ -18,12 +18,13 @@
 
     <GridView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/gvResults"
-        android:horizontalSpacing="16dp"
+        android:horizontalSpacing="8dp"
         android:verticalSpacing="16dp"
-        android:padding="16dp"
+        android:padding="8dp"
+        android:background="@color/background_floating_material_light"
         android:clipToPadding="false"
-        android:numColumns="2" />
+        android:numColumns="3" />
 
 </LinearLayout>
