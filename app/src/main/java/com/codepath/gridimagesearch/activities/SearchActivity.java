@@ -17,8 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.adapters.ImageResultsAdapter;
 import com.codepath.gridimagesearch.fragments.FilterDialog;
@@ -45,7 +45,7 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
     private final String searchUrlBase = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=";
 
     private Toolbar toolbar;
-
+    private Context context;
     private String imageSize = "any";
     private String imageColor = "any";
     private String imageType = "any";
@@ -59,6 +59,8 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        context = SearchActivity.this;
 
         setupViews();
 
@@ -99,7 +101,12 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
                 startActivity(intent);
             }
         });
-        // tvNoNetwork = (TextView) findViewById(R.id.tvNoNetwork);
+
+        new MaterialDialog.Builder(context)
+                .title(R.string.welcome)
+                .content(R.string.welcome_message)
+                .positiveText("OK")
+                .show();
     }
 
     // Append more data into the adapter
@@ -113,9 +120,20 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
     }
 
     private void performSearch() {
-        // Initial search, clear the adapter
-        aImageResults.clear();
-        performSearch(0);
+        // Check Internet Availability
+        if (!isNetworkAvailable()) {
+            // tvNoNetwork.setVisibility(View.VISIBLE);
+            // Toast.makeText(SearchActivity.this, "Internet is not available", Toast.LENGTH_SHORT).show();
+            new MaterialDialog.Builder(context)
+                    .title(R.string.no_network_title)
+                    .content(R.string.no_network_message)
+                    .positiveText(R.string.OK)
+                    .show();
+        } else {
+            // Initial search, clear the adapter
+            aImageResults.clear();
+            performSearch(0);
+        }
     }
 
     private void performSearch(final int offset) {
@@ -156,13 +174,6 @@ public class SearchActivity extends ActionBarActivity implements FilterDialog.Fi
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String queryString) {
-                // Check Internet Availability
-                if (!isNetworkAvailable()) {
-                    // tvNoNetwork.setVisibility(View.VISIBLE);
-                    Toast.makeText(SearchActivity.this, "Internet is not available", Toast.LENGTH_LONG).show();
-                    return false;
-                }
-
                 // Get the query string from searchView
                 query = queryString;
                 // perform query here

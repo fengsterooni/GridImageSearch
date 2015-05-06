@@ -13,8 +13,11 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.models.ImageResult;
 import com.squareup.picasso.Callback;
@@ -27,6 +30,7 @@ import java.io.IOException;
 public class ImageDisplayActivity extends ActionBarActivity {
     private ShareActionProvider sharedAction;
     private Toolbar toolbar;
+    private ImageView ivImageResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +42,32 @@ public class ImageDisplayActivity extends ActionBarActivity {
 
         ImageResult result = (ImageResult) getIntent().getSerializableExtra("result");
         // Find the imageView
-        ImageView ivImageResult = (ImageView) findViewById(R.id.ivImageResult);
+        ivImageResult = (ImageView) findViewById(R.id.ivImageResult);
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbSpinner);
+
         // Load the image url into the imageView using Picasso
         Picasso.with(this).load(result.fullUrl).into(ivImageResult, new Callback() {
             @Override
             public void onSuccess() {
                 setupSharedIntent();
+                ivImageResult.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onError() {
+                progressBar.setVisibility(View.GONE);
+                new MaterialDialog.Builder(ImageDisplayActivity.this)
+                        .title(R.string.error_loading)
+                        .content(R.string.image_loading_failed)
+                        .positiveText(R.string.OK)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                finish();
+                            }
+                        })
+                        .show();
 
             }
         });
@@ -55,8 +75,7 @@ public class ImageDisplayActivity extends ActionBarActivity {
 
     private void setupSharedIntent() {
         // Fetch Bitmap Uri locally
-        ImageView ivImage = (ImageView) findViewById(R.id.ivImageResult);
-        Uri bmpUri = getLocalBitmapUri(ivImage); // see previous remote images section
+        Uri bmpUri = getLocalBitmapUri(ivImageResult); // see previous remote images section
         // Create share intent as described above
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);

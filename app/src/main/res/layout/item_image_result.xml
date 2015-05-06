@@ -2,27 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:elevation="2dp"
-    >
+    android:background="@drawable/border">
 
     <ImageView
+        android:id="@+id/ivImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:contentDescription="@string/image_result"
-        android:id="@+id/ivImage" />
+        android:scaleType="centerCrop" />
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivImage"
-        android:text="@string/image_title_label"
-        android:lines="2"
         android:ellipsize="end"
         android:gravity="center_horizontal"
-        android:textSize="12sp"
-        android:background="#FFF"
-        android:textColor="@color/colorPrimaryDark"
-        android:id="@+id/tvTitle" />
+        android:background="@android:color/white"
+        android:lines="2"
+        android:text="@string/image_title_label"
+        android:textColor="@android:color/black"
+        android:textSize="12sp" />
 </RelativeLayout>

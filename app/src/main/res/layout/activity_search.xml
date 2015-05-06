@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:id="@+id/gvResults"
         app:item_margin="8dp"
-        android:background="@color/background_floating_material_light"
+        android:background="@drawable/wallpaper"
         app:column_count="@integer/column_count"/>
 
 </LinearLayout>
