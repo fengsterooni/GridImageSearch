@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.models.ImageResult;
+import com.codepath.gridimagesearch.views.TouchImageView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +31,7 @@ import java.io.IOException;
 public class ImageDisplayActivity extends ActionBarActivity {
     private ShareActionProvider sharedAction;
     private Toolbar toolbar;
-    private ImageView ivImageResult;
+    private TouchImageView ivImageResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class ImageDisplayActivity extends ActionBarActivity {
 
         ImageResult result = (ImageResult) getIntent().getSerializableExtra("result");
         // Find the imageView
-        ivImageResult = (ImageView) findViewById(R.id.ivImageResult);
+        ivImageResult = (TouchImageView) findViewById(R.id.ivImageResult);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbSpinner);
 
         // Load the image url into the imageView using Picasso
@@ -50,8 +51,9 @@ public class ImageDisplayActivity extends ActionBarActivity {
             @Override
             public void onSuccess() {
                 setupSharedIntent();
-                ivImageResult.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                ivImageResult.setVisibility(View.VISIBLE);
+                ivImageResult.setZoom(1.0f);
             }
 
             @Override
